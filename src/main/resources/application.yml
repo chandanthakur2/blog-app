@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: blog-application
+  datasource:
+    url: jdbc:postgresql://localhost:5432/blog
+    username: chandan.thakur1
+    password: root
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+server:
+  port: 8080
+
+
+jwt-secret: "my-secret-key-11668834343"
