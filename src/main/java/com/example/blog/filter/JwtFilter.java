@@ -77,4 +77,5 @@ public class JwtFilter extends OncePerRequestFilter {
                 path.startsWith("/api/blog/getAll") ||
                 path.startsWith("/api/public/");
     }
+
 }
