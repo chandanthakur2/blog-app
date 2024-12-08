@@ -1,5 +1,6 @@
 package com.example.blog.service;
 
+import com.example.blog.context.CurrentUserContext;
 import com.example.blog.model.Blog;
 import com.example.blog.model.User;
 import com.example.blog.repository.BlogRepository;
@@ -16,10 +17,19 @@ public class BlogService {
     private BlogRepository blogRepository;
 
     @Autowired
-    private JwtUtils jwtUtils;
+    private CurrentUserContext currentUserContext;
+
+
+
 
     public List<Blog> getAllBlogs(){
         List<Blog> blogs =  blogRepository.findAll();
+        return blogs;
+    }
+
+    public List<Blog> getMyBlogs(){
+        User user = currentUserContext.getCurrentUser();
+        List<Blog> blogs =  blogRepository.findByAuthorId(user.getId());
         return blogs;
     }
 
@@ -32,6 +42,8 @@ public class BlogService {
     }
 
     public Blog createBlog(Blog blog){
+        User user = currentUserContext.getCurrentUser();
+        blog.setAuthorId(user.getId());
         return blogRepository.save(blog);
     }
 

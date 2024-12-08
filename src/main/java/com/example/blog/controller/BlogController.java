@@ -24,6 +24,15 @@ public class BlogController {
         }
     }
 
+    @GetMapping("/myBlogs")
+    public ResponseEntity<?> getMyBlogs() {
+        try {
+            return ResponseEntity.ok(blogService.getMyBlogs());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
+        }
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<?> getBlogById(@PathVariable Long id) {
         try {

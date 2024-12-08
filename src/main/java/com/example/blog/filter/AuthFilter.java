@@ -1,5 +1,7 @@
 package com.example.blog.filter;
 
+import com.example.blog.context.CurrentUserContext;
+import com.example.blog.model.User;
 import com.example.blog.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,6 +17,9 @@ public class AuthFilter extends OncePerRequestFilter {
 
     @Autowired
     private JwtUtils jwtUtils;
+
+    @Autowired
+    private CurrentUserContext currentUserContext;
 
     @Override
     protected void doFilterInternal(
@@ -38,6 +43,11 @@ public class AuthFilter extends OncePerRequestFilter {
                 response.getWriter().write("{\"error\": \"Invalid token\"}");
                 return;
             }
+
+            User user = jwtUtils.getUserFromToken(token);
+            currentUserContext.setCurrentUser(user);
+
+
             filterChain.doFilter(request, response);
         } catch (Exception e) {
             logger.error("Error processing request", e);
