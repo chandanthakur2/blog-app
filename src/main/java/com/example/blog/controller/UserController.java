@@ -11,13 +11,12 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/user")
-@CrossOrigin(origins = "http://localhost:3000/")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<?> createUser(@RequestBody User user) {
         try {
             return ResponseEntity.ok(userService.createUser(user));

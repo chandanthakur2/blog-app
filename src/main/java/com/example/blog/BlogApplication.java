@@ -18,10 +18,13 @@ public class BlogApplication {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**").allowedOrigins("*")
-						.allowedMethods("HEAD", "GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS");
+				registry.addMapping("/**")
+						.allowedOrigins("http://localhost:3000")
+						.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+						.allowedHeaders("*")
+						.allowCredentials(true)
+						.exposedHeaders("Authorization");
 			}
 		};
 	}
-
 }

@@ -53,17 +53,22 @@ public class UserService {
     }
 
     public String login(LoginDto loginDto) {
-        User existingUser = userRepository.findByEmail(loginDto.getEmail()).orElse(null);
-        if (existingUser == null) {
-            throw new RuntimeException("User not found");
-        }
+        try {
+            User existingUser = userRepository.findByEmail(loginDto.getEmail()).orElse(null);
+            if (existingUser == null) {
+                throw new RuntimeException("User not found");
+            }
 
-        if(!verifyPassword(existingUser, loginDto.getPassword())) {
-            throw new RuntimeException("Invalid password");
-        }
+            if(!verifyPassword(existingUser, loginDto.getPassword())) {
+                throw new RuntimeException("Invalid password");
+            }
 
-        // create a jwt token and return it
-        return generateJwtToken(existingUser);
+            // create a jwt token and return it
+            return generateJwtToken(existingUser);
+        }
+        catch (Exception e) {
+            throw new RuntimeException("Error logging in");
+        }
     }
 
     private String generateJwtToken(User user) {
